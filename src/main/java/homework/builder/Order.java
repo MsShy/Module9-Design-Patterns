@@ -29,8 +29,6 @@ public class Order {
 		private int hamburgerBuilder;
 		private int crispyBuilder;
 
-		public Builder() {
-		}
 
 		public Builder coffeeBuild(int coffee) {
 			this.coffeeBuilder = coffee;
