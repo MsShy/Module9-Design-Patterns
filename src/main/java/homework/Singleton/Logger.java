@@ -30,7 +30,8 @@ public class Logger implements Serializable{
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
-		throw new IllegalStateException("Logger can not be clonned");
+		throw new IllegalStateException("Logger can not be cloned");
+
 	}
 
 	public void message(String message) {

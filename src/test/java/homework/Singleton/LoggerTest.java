@@ -1,14 +1,16 @@
 package homework.singleton;
 
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class LoggerTest {
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(LoggerTest.class);
 	private Logger logger = Logger.getInstance();
 
 	@Test
@@ -17,26 +19,40 @@ public class LoggerTest {
 	}
 
 	@Test
-	public void testSerialize() throws IOException, ClassNotFoundException {
-		ObjectOutput out=new ObjectOutputStream(new FileOutputStream("src/test/resources/file.ser"));
-		out.writeObject(logger);
-		out.close();
-		ObjectInputStream in=new ObjectInputStream(new FileInputStream("src/test/resources/file.ser"));
-		Logger serializedLogger= (Logger) in.readObject();
-		in.close();
-		assertTrue(serializedLogger == Logger.getInstance());
+	public void testSerialize() {
+		try (ObjectOutput out = new ObjectOutputStream(new FileOutputStream("src/test/resources/file.ser"))) {
+			out.writeObject(logger);
+			out.close();
+		} catch (IOException e) {
+			log.error(e.getMessage(), e);
+		}
 
+
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/test/resources/file.ser"))) {
+			Logger serializedLogger = (Logger) in.readObject();
+			in.close();
+			assertTrue(serializedLogger == logger);
+
+		} catch (IOException | ClassNotFoundException e) {
+			log.error(e.getMessage(), e);
+		}
 
 	}
 
 	@Test
-	public void testReflation() throws IllegalAccessException, InvocationTargetException, InstantiationException {
-		Logger log = null;
-		Constructor[] constructors = Logger.class.getDeclaredConstructors();
-		for (Constructor constructor : constructors) {
-			constructor.setAccessible(true);
-			log = (Logger) constructor.newInstance();
-			assertTrue(log == Logger.getInstance());
+	public void testReflation() {
+		Logger logTest;
+		try {
+
+			Constructor[] constructors = Logger.class.getDeclaredConstructors();
+			for (Constructor constructor : constructors) {
+				constructor.setAccessible(true);
+				logTest = (Logger) constructor.newInstance();
+
+				assertTrue(logTest == Logger.getInstance());
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
 		}
 	}
 
