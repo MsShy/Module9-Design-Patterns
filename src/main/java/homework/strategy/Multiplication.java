@@ -1,6 +1,6 @@
 package homework.strategy;
 
-public class Multiplication implements Calculator {
+class Multiplication implements Calculator {
 
 	@Override
 	public int count(final int number1, final int number2) {

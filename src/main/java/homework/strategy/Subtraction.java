@@ -1,9 +1,8 @@
 package homework.strategy;
 
-public class Subtraction implements Calculator {
+class Subtraction implements Calculator {
 	@Override
 	public int count(final int number1, final int number2) {
-
 		return number1 - number2;
 	}
 }

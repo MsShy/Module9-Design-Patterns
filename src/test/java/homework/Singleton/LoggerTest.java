@@ -20,7 +20,7 @@ public class LoggerTest {
 
 	@Test
 	public void testSerialize() {
-		try (ObjectOutput out = new ObjectOutputStream(new FileOutputStream("src/test/resources/file.ser"))) {
+		try (ObjectOutput out = new ObjectOutputStream(new FileOutputStream("src/test/resources/logger.bin"))) {
 			out.writeObject(logger);
 			out.close();
 		} catch (IOException e) {
@@ -28,7 +28,7 @@ public class LoggerTest {
 		}
 
 
-		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/test/resources/file.ser"))) {
+		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("src/test/resources/logger.bin"))) {
 			Logger serializedLogger = (Logger) in.readObject();
 			in.close();
 			assertTrue(serializedLogger == logger);
