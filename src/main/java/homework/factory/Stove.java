@@ -1,11 +1,17 @@
 package homework.factory;
 
 public interface Stove {
-	boolean setOnOff();
+	void setOnOff(boolean state);
 
-	long setTimer();
+	void setTimer(long time);
 
-	boolean start();
+	long getTime();
+
+	int getTemperature();
+
+	void setTemperature(int temperature);
+
+	double getExpense();
 
 	void stop();
 

@@ -1,51 +1,52 @@
 package homework.factory;
 
-import static java.lang.Thread.sleep;
-
 public class GasStove implements Stove {
-	boolean setOnOff;
-	long time;
-	boolean start;
-
+	private boolean state;
+	private long time;
+	private int temperature;
 
 	@Override
-	public boolean setOnOff() {
-
-		return setOnOff = true;
+	public void setOnOff(final boolean state) {
+		this.state = state;
 	}
 
 	@Override
-	public long setTimer() {
-		return this.time = 230;
+	public void setTimer(long time) {
+
+		this.time = time;
+
+	}
+
+	public long getTime() {
+		return time;
 	}
 
 	@Override
-	public boolean start() {
+	public int getTemperature() {
+		return temperature;
+	}
 
-		if (setOnOff = true) {
-			Thread thread = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						sleep(time);
-						stop();
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-						Thread.currentThread().interrupt();
-					}
-				}
-			});
-			thread.start();
+	@Override
+	public void setTemperature(int temperature) {
+		if (isState()) {
+			this.temperature = temperature;
 
-		}
-		return this.start = true;
+		} else
+			System.out.println("please set on the stove");
+	}
+
+	@Override
+	public double getExpense() {
+		return 1.8 * time / 60 * 0.64;
 	}
 
 	public void stop() {
-		if (setOnOff = false) {
-			System.out.println(String.format("%s is done", getClass().getSimpleName()));
-		}
+		state = false;
+		System.out.println(String.format("%s is done", getClass().getSimpleName()));
+
 	}
 
-
+	public boolean isState() {
+		return state;
+	}
 }
